@@ -1,19 +1,19 @@
 <h1>Cartões Cadastrados</h1>
 
-<a href="/jogos/{{jogo.id}}/novoCartao">Cadastrar Conquista</a>
+<a href="/jogos/{{jogo.id}}/novoConq">Cadastrar Conquista</a>
 
 <table border="1">
   <!-- table row -->
   <tr>
     <!-- table head -->
-    <th>Número</th>
-    <th>Nome</th>
-    <th>Nome</th>
+    <th>titulo</th>
+    <th>descrição</th>
   </tr>
-  {{#each cartoes}}
+  {{#each conq}}
     <tr>
-      <td>{{this.numero}}</td>
-      <td>{{this.nome}}</td>
+     <td>{{this.id}}</td>
+      <td>{{this.titulo}}</td>
+      <td>{{this.desc}}</td>
     </tr>
   {{/each}}
 </table>

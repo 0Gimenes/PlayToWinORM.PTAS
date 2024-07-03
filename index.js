@@ -194,6 +194,44 @@ app.post("/jogos/:id/delete", async (req, res) => {
   }
 });
 
+// Rotas para conquista
+
+//Ver cartões do usuário
+app.get("/jogos/:id/conq", async (req, res) => {
+  const id = parseInt(req.params.id);
+  const jogo = await Usuario.findByPk(id, { raw: true });
+
+  const conq = await Cartao.findAll({
+    raw: true,
+    where: { JogoId: id },
+  });
+
+  res.render("conq.handlebars", { jogo, conq });
+});
+
+//Formulário de cadastro de cartão
+app.get("/jogos/:id/novoConq", async (req, res) => {
+  const id = parseInt(req.params.id);
+  const jogo = await Jogo.findByPk(id, { raw: true });
+
+  res.render("formJogo", { jogo });
+});
+
+//Cadastro de Conquista
+app.post("/jogos/:id/novoConq", async (req, res) => {
+  const id = parseInt(req.params.id);
+
+  const dadosConq = {
+    titulo: req.body.titulo,
+    desc: req.body.desc,
+    JogoId: id,
+  };
+
+  await Conq.create(dadosConq);
+
+  res.redirect(`/jogos/${id}/conq`);
+});
+
 app.listen(8000, () => {
   console.log("Server rodando!");
 });

@@ -17,12 +17,13 @@
       <td>{{this.titulo}}</td>
       <td>{{this.desc}}</td>
       <td>{{this.prec}}</td>
-      
+      <td>
         <a href="/jogos/{{this.id}}/update">Atualizar</a>
         <form action="/jogos/{{this.id}}/delete" method="post">
           <input type="submit" value="Excluir" />
         </form>
-      </td>
+        <a href="/jogos/{{this.id}}/conq">Ver conquistas</a>
+      </td>       
     </tr>
   {{/each}}
 </table>
