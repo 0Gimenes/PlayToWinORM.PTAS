@@ -5,7 +5,12 @@ const Jogo = db.define("Jogo", {
   titulo: {
     type: DataTypes.STRING,
   },
-  // Há outros campos a serem inseridos aqui...
+  desc: {
+    type: DataTypes.STRING,
+  },
+  prec: {
+    type: DataTypes.STRING,
+  },
 });
 
 module.exports = Jogo;
