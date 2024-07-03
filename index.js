@@ -131,6 +131,69 @@ app.post("/usuarios/:id/novoCartao", async (req, res) => {
   res.redirect(`/usuarios/${id}/cartoes`);
 });
 
+//rotas para jogo
+app.get("/jogos", async (req, res) => {
+  const jogos = await Jogo.findAll({ raw: true });
+
+  res.render("jogos", { jogos });
+});
+
+app.get("/jogos/novo", (req, res) => {
+  res.render("formJogo");
+});
+
+app.post("/jogos/novo", async (req, res) => {
+  const dadosJogo = {
+    titulo: req.body.titulo,
+    desc: req.body.desc,
+    prec: req.body.prec,
+  };
+
+  const jogo = await Jogo.create(dadosJogo);
+  res.send("jogo inserido sob o id " + jogo.id);
+});
+
+app.get("/jogos/:id/update", async (req, res) => {
+  const id = parseInt(req.params.id);
+  const jogo = await Jogo.findByPk(id, { raw: true });
+
+  res.render("formJogo", { jogo });
+  // const jogo = Jogo.findOne({
+  //   where: { id: id },
+  //   raw: true,
+  // });
+});
+
+app.post("/jogos/:id/update", async (req, res) => {
+  const id = parseInt(req.params.id);
+
+  const dadosJogo = {
+    titulo: req.body.titulo,
+    desc: req.body.desc,
+    prec: req.body.prec,
+  };
+
+  const retorno = await Jogo.update(dadosJogo, { where: { id: id } });
+
+  if (retorno > 0) {
+    res.redirect("/jogos");
+  } else {
+    res.send("Erro ao atualizar usuário");
+  }
+});
+
+app.post("/jogos/:id/delete", async (req, res) => {
+  const id = parseInt(req.params.id);
+
+  const retorno = await Jogo.destroy({ where: { id: id } });
+
+  if (retorno > 0) {
+    res.redirect("/jogos");
+  } else {
+    res.send("Erro ao excluir jogo");
+  }
+});
+
 app.listen(8000, () => {
   console.log("Server rodando!");
 });
@@ -143,12 +206,3 @@ conn
   .catch((err) => {
     console.log("Ocorreu um erro: " + err);
   });
-
-// conn
-//   .authenticate()
-//   .then(() => {
-//     console.log("Conectado ao banco de dados com sucesso!");
-//   })
-//   .catch((err) => {
-//     console.log("Ocorreu um erro: " + err);
-//   });
